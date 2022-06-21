@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/News_Parser
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - redis
+    tty: true
+  db:
+    image: mysql:5.7
+    ports:
+      - '3307:3306'
+    env_file: ../News_Parser/main/.env
+    restart: always
+    volumes:
+      - ./db_django:/var/lib/mysql
+  redis:
+    image: "redis:alpine"
+  celery:
+    build: .
+    command: celery -A main worker -l info
+    volumes:
+      - .:/News_Parser
+    depends_on:
+      - db
+      - redis
+  celery-beat:
+    build: .
+    command: celery -A main beat -l info
+    volumes:
+      - .:/News_Parser
+    depends_on:
+      - db
+      - redis

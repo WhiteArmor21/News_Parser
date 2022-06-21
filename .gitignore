@@ -1,0 +1,4 @@
+venv
+db_django
+*.pyc
+celerybeat-schedule
