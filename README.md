@@ -1,5 +1,6 @@
-# Django Hacker News
+# Django News Parser
 ## Launch instructions:
+- in main/.env type your MYSQL passwords
 - in core catalog (contains files : Dockerfile, docker-compose.yml, manage.py,...)
 - use command "docker-compose up -d --build"
 - since that moment, the service will be available by url "http://localhost:8000/"
@@ -25,3 +26,12 @@ Can be sorted and filtered by extra params:
 ### Forced update method:
 (http://localhost:8000/update)
 Parse posts from website, updates them in database and then returns json response ({'success': True})
+### The service is also able to update posts automatically using Celery
+- By default, the update occurs every 10 minutes, but you can change this setting in the file settings.py
+- On the last lines of the file, you can replace the value passed to the crontab() function
+### Example
+    crontab() - to update every minute.
+    crontab(minute=0, hour=0) - to update daily at midnight.
+    crontab(minute='*/15') - to update every 15 minutes.
+    ...
+more Examples at https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html#:~:text=Meaning-,crontab(),-Execute%20every%20minute
