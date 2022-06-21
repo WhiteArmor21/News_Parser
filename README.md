@@ -1,5 +1,6 @@
 # Django News Parser
 ## Launch instructions:
+- create 'news' MYSQL database 
 - in main/.env type your MYSQL passwords
 - in core catalog (contains files : Dockerfile, docker-compose.yml, manage.py,...)
 - use command "docker-compose up -d --build"
